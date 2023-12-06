@@ -85,6 +85,7 @@ public class Wallet {
 
     while (true) {
       System.out.println("""
+                    Welcome to your Wallet, what I can do for You master!!
                     Choose an option:
                     1 - Deposit
                     2 - Make Payment
