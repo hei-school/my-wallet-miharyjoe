@@ -32,7 +32,7 @@ This project implements a simple wallet application in C# with additional functi
    Clone or download the C# branch of the project from the repository.
 
    ```bash
-   git clone -b feature/csharp https://github.com/hei-school/my-wallet-miharyjoe.git
+   git clone -b feature/c# https://github.com/hei-school/my-wallet-miharyjoe.git
    
    cd wallet
    
