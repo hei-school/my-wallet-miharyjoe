@@ -35,5 +35,5 @@ This project implements a simple wallet application in JavaScript with additiona
 ```bash
 cd wallet-project
 
-node wallet.js
+node index.js
 ```
