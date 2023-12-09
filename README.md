@@ -13,6 +13,11 @@ This project implements a simple wallet application with various functionalities
    - Convert Ariary to Euro.
 4. **Display Transaction History**: View a history of all transactions.
 5. **Display Current Balance**: Check the current balance in Ariary, Dollar, and Euro.
+6. **Card Manager**:
+   - Add a card.
+   - Display all cards.
+   - Remove a card.
+
 
 ## Code Branches
 
