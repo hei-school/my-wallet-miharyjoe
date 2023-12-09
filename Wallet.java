@@ -1,15 +1,87 @@
-
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+
+class Transaction {
+  private Date date;
+  private double amount;
+  private String status;
+
+  public Transaction(double amount, String status) {
+    this.date = new Date();
+    this.amount = amount;
+    this.status = status;
+  }
+
+  @Override
+  public String toString() {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    return String.format("| %-20s | %-10.2f | %-15s |", sdf.format(date), amount, status);
+  }
+}
+
+class Card {
+  private String type;
+  private String details;
+
+  public Card(String type, String details) {
+    this.type = type;
+    this.details = details;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("| %-15s | %-40s |", type, details);
+  }
+}
+
+class CardManager {
+  private List<Card> cards = new ArrayList<>();
+
+  public void addCard(String type, String details) {
+    Card card = new Card(type, details);
+    cards.add(card);
+    System.out.println("Card added successfully.");
+  }
+
+  public void displayCards() {
+    if (cards.isEmpty()) {
+      System.out.println("No cards available.");
+    } else {
+      System.out.println("Card Manager:");
+      System.out.println("+-----------------+----------------------------------------+");
+      System.out.println("| Type            | Details                                |");
+      System.out.println("+-----------------+----------------------------------------+");
+
+      for (Card card : cards) {
+        System.out.println(card);
+      }
+
+      System.out.println("+-----------------+----------------------------------------+");
+    }
+  }
+
+  public void removeCard(int index) {
+    if (index >= 0 && index < cards.size()) {
+      cards.remove(index);
+      System.out.println("Card removed successfully.");
+    } else {
+      System.out.println("Invalid card index.");
+    }
+  }
+}
+
 public class Wallet {
   private List<Transaction> transactionHistory = new ArrayList<>();
   private Scanner scanner = new Scanner(System.in);
   private double balance = 0.0;
   private double balanceEuro = 0.0;
   private double balanceDollar = 0.0;
+  private CardManager cardManager = new CardManager();
 
-  //the conversion rate is not a fix value but change every day
+  // Conversion rates
   private final double conversionRateToDollar = 0.00022;
   private final double conversionRateToEuro = 0.00020;
 
@@ -18,11 +90,13 @@ public class Wallet {
     addTransaction(amount, "Deposit");
     System.out.println("Deposit successful. Current balance: " + balance);
   }
+
   public void depositDollar(double amount) {
     balanceDollar += amount;
     addTransaction(amount, "depositDollar");
     System.out.println("Deposit successful. Current balance: " + balanceDollar);
   }
+
   public void depositEuro(double amount) {
     balanceEuro += amount;
     addTransaction(amount, "depositEuro");
@@ -79,6 +153,51 @@ public class Wallet {
     System.out.println("Current BalanceEuro: " + balanceEuro);
   }
 
+  public void cardManagerMenu() {
+    while (true) {
+      System.out.println("""
+                    Card Manager Menu:
+                    1 - Add Card
+                    2 - Display Cards
+                    3 - Remove Card
+                    0 - Back to Main Menu
+                    """);
+
+      int choice = scanner.nextInt();
+      switch (choice) {
+        case 1:
+          addCard();
+          break;
+        case 2:
+          cardManager.displayCards();
+          break;
+        case 3:
+          removeCard();
+          break;
+        case 0:
+          System.out.println("Returning to the main menu.");
+          return;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+    }
+  }
+
+  private void addCard() {
+    scanner.nextLine(); // Consume the newline character
+    System.out.println("Enter card type (e.g., National ID, Driver's License): ");
+    String type = scanner.nextLine();
+    System.out.println("Enter card details: ");
+    String details = scanner.nextLine();
+    cardManager.addCard(type, details);
+  }
+
+  private void removeCard() {
+    System.out.println("Enter the index of the card to remove: ");
+    int index = scanner.nextInt();
+    cardManager.removeCard(index);
+  }
+
   public static void main(String[] args) {
     Wallet wallet = new Wallet();
     Scanner scanner = new Scanner(System.in);
@@ -93,6 +212,7 @@ public class Wallet {
                     4 - Convert to Euro
                     5 - Display Transaction History
                     6 - Display Current Balance
+                    7 - Card Manager
                     0 - Exit
                     """);
 
@@ -124,6 +244,9 @@ public class Wallet {
           break;
         case 6:
           wallet.displayBalance();
+          break;
+        case 7:
+          wallet.cardManagerMenu();
           break;
         case 0:
           System.out.println("Exiting. Goodbye!");
