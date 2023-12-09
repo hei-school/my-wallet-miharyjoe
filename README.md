@@ -23,7 +23,7 @@ This project implements a simple wallet application with various functionalities
 
 You can find the source code for each language in the following branches:
 
-- [Java Branch](https://github.com/hei-school/cc-d1-my-wallet-miharyjoe/tree/feature/java)
-- [C# Branch](https://github.com/hei-school/cc-d1-my-wallet-miharyjoe/tree/feature/c%23)
-- [JavaScript Branch](https://github.com/hei-school/cc-d1-my-wallet-miharyjoe/tree/feature/javascript)
-- [Python Branch](https://github.com/hei-school/cc-d1-my-wallet-miharyjoe/tree/feature/python)
+- [Java Branch](https://github.com/hei-school/my-wallet-miharyjoe/tree/feature/java)
+- [C# Branch](https://github.com/hei-school/my-wallet-miharyjoe/tree/feature/c%23)
+- [JavaScript Branch](https://github.com/hei-school/my-wallet-miharyjoe/tree/feature/javascript)
+- [Python Branch](https://github.com/hei-school/my-wallet-miharyjoe/tree/feature/python)
