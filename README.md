@@ -33,7 +33,7 @@ This project implements a simple wallet application in Java with additional func
    Clone or download the Java branch of the project from the repository.
 
    ```bash
-   git clone -b feature/java https://github.com/hei-school/cc-d1-my-wallet-miharyjoe.git
+   git clone -b feature/java https://github.com/hei-school/my-wallet-miharyjoe.git
    ```
 
 ## Launching the Java Code
