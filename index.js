@@ -8,8 +8,74 @@ class Transaction {
   }
 
   toString() {
-    const dateString = this.date.toISOString().slice(0, 19).replace("T", " ");
+    const sdf = new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
+    const dateString = sdf.format(this.date);
     return `| ${dateString} | ${this.amount.toFixed(2)} | ${this.status} |`;
+  }
+}
+
+class Card {
+  constructor(type, details) {
+    this.type = type;
+    this.details = details;
+  }
+
+  toString() {
+    return `| ${this.type.padEnd(15)} | ${this.details.padEnd(40)} |`;
+  }
+}
+
+class CardManager {
+  constructor() {
+    this.cards = [];
+  }
+
+  addCard(type, details) {
+    const card = new Card(type, details);
+    this.cards.push(card);
+    console.log("Card added successfully.");
+  }
+
+  displayCards() {
+    if (this.cards.length === 0) {
+      console.log("No cards available.");
+    } else {
+      console.log("Card Manager:");
+      console.log(
+        "+-----------------+----------------------------------------+"
+      );
+      console.log(
+        "| Type            | Details                                |"
+      );
+      console.log(
+        "+-----------------+----------------------------------------+"
+      );
+
+      for (const card of this.cards) {
+        console.log(card.toString());
+      }
+
+      console.log(
+        "+-----------------+----------------------------------------+"
+      );
+    }
+  }
+
+  removeCard(index) {
+    if (index >= 0 && index < this.cards.length) {
+      this.cards.splice(index, 1);
+      console.log("Card removed successfully.");
+    } else {
+      console.log("Invalid card index.");
+    }
   }
 }
 
@@ -17,10 +83,9 @@ class Wallet {
   constructor() {
     this.transactionHistory = [];
     this.balance = 0.0;
-    this.balanceDollar = 0.0;
     this.balanceEuro = 0.0;
-    this.conversionRateToDollar = 0.00022;
-    this.conversionRateToEuro = 0.0002;
+    this.balanceDollar = 0.0;
+    this.cardManager = new CardManager();
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -35,13 +100,13 @@ class Wallet {
 
   depositDollar(amount) {
     this.balanceDollar += amount;
-    this.addTransaction(amount, "Deposit Dollar");
+    this.addTransaction(amount, "depositDollar");
     console.log(`Deposit successful. Current balance: ${this.balanceDollar}`);
   }
 
   depositEuro(amount) {
     this.balanceEuro += amount;
-    this.addTransaction(amount, "Deposit Euro");
+    this.addTransaction(amount, "depositEuro");
     console.log(`Deposit successful. Current balance: ${this.balanceEuro}`);
   }
 
@@ -56,7 +121,7 @@ class Wallet {
   }
 
   convertToDollar(amount) {
-    const convertedAmount = amount * this.conversionRateToDollar;
+    const convertedAmount = amount * 0.00022;
     this.balance -= amount;
     this.addTransaction(-amount, "Ariary to Dollar Conversion");
     this.depositDollar(convertedAmount);
@@ -64,7 +129,7 @@ class Wallet {
   }
 
   convertToEuro(amount) {
-    const convertedAmount = amount * this.conversionRateToEuro;
+    const convertedAmount = amount * 0.0002;
     this.balance -= amount;
     this.addTransaction(-amount, "Ariary to Euro Conversion");
     this.depositEuro(convertedAmount);
@@ -95,10 +160,55 @@ class Wallet {
     console.log(`Current Balance Euro: ${this.balanceEuro}`);
   }
 
+  async cardManagerMenu() {
+    while (true) {
+      console.log(`
+                    Card Manager Menu:
+                    1 - Add Card
+                    2 - Display Cards
+                    3 - Remove Card
+                    0 - Back to Main Menu
+                `);
+
+      const choice = await this.getUserInput("Enter your choice: ");
+
+      switch (parseInt(choice)) {
+        case 1:
+          await this.addCard();
+          break;
+        case 2:
+          this.cardManager.displayCards();
+          break;
+        case 3:
+          await this.removeCard();
+          break;
+        case 0:
+          console.log("Returning to the main menu.");
+          return;
+        default:
+          console.log("Invalid choice. Please try again.");
+      }
+    }
+  }
+
+  async addCard() {
+    console.log("Enter card type (e.g., National ID, Driver's License): ");
+    const type = await this.getUserInput("");
+    console.log("Enter card details: ");
+    const details = await this.getUserInput("");
+    this.cardManager.addCard(type, details);
+  }
+
+  async removeCard() {
+    console.log("Enter the index of the card to remove: ");
+    const index = await this.getUserInput("");
+    this.cardManager.removeCard(parseInt(index));
+  }
+
   getUserInput(question) {
     return new Promise((resolve) => {
       this.rl.question(question, (answer) => {
-        resolve(answer);
+        resolve(answer.trim());
       });
     });
   }
@@ -114,6 +224,7 @@ class Wallet {
                 4 - Convert to Euro
                 5 - Display Transaction History
                 6 - Display Current Balance
+                7 - Card Manager
                 0 - Exit
             `);
 
@@ -151,6 +262,9 @@ class Wallet {
           break;
         case 6:
           this.displayBalance();
+          break;
+        case 7:
+          await this.cardManagerMenu();
           break;
         case 0:
           console.log("Exiting. Goodbye!");
