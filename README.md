@@ -33,7 +33,7 @@ This project implements a simple wallet application in Python with additional fu
    Clone or download the Python branch of the project from the repository.
 
    ```bash
-   git clone -b feature/python https://github.com/hei-school/cc-d1-my-wallet-miharyjoe.git
+   git clone -b feature/python https://github.com/hei-school/my-wallet-miharyjoe.git
    ```
 
    ```bash
