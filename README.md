@@ -27,7 +27,7 @@ This project implements a simple wallet application in JavaScript with additiona
    Clone or download the JavaScript branch of the project from the repository.
 
    ```bash
-   git clone -b feature/javascript https://github.com/hei-school/cc-d1-my-wallet-miharyjoe.git
+   git clone -b feature/javascript https://github.com/hei-school/my-wallet-miharyjoe.git
    ```
 
    #Launching the JavaScript Code
