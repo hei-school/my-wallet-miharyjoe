@@ -37,7 +37,7 @@ This project implements a simple wallet application in Python with additional fu
    ```
 
    ```bash
-   cd wallet-project
+   cd my-wallet-miharyjoe
 
    python wallet.py
    ```
