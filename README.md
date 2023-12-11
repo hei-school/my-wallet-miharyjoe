@@ -43,7 +43,7 @@ This project implements a simple wallet application in Java with additional func
 Open a terminal and navigate to the project's Java directory.
 
 ```bash
-cd wallet-project
+cd my-wallet-miharyjoe
 
 javac Wallet.java
 
