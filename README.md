@@ -33,7 +33,7 @@ This project implements a simple wallet application in C# with additional functi
 
    ```bash
    git clone -b feature/c# https://github.com/hei-school/my-wallet-miharyjoe.git
-   
-   cd wallet
+
+   cd my-wallet-miharyjoe
    
    dotnet run wallet.cs
