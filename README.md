@@ -33,7 +33,7 @@ This project implements a simple wallet application in JavaScript with additiona
    #Launching the JavaScript Code
 
 ```bash
-cd wallet-project
+cd my-wallet-miharyjoe
 
 node index.js
 ```
